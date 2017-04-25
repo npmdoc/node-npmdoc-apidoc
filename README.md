@@ -1,4 +1,7 @@
-# api documentation for  [apidoc (v0.17.5)](http://apidocjs.com)  [![npm package](https://img.shields.io/npm/v/npmdoc-apidoc.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-apidoc) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-apidoc.svg)](https://travis-ci.org/npmdoc/node-npmdoc-apidoc)
+# npmdoc-apidoc
+
+#### basic api documentation for  [apidoc (v0.17.5)](http://apidocjs.com)  [![npm package](https://img.shields.io/npm/v/npmdoc-apidoc.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-apidoc) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-apidoc.svg)](https://travis-ci.org/npmdoc/node-npmdoc-apidoc)
+
 #### RESTful web API Documentation Generator
 
 [![NPM](https://nodei.co/npm/apidoc.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/apidoc)
