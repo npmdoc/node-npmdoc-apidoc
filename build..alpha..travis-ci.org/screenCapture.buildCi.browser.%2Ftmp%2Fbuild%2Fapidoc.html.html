@@ -80,19 +80,6 @@
 
     </ol></li>
 
-    <li class="apidocModuleLi"><a href="#apidoc.module.apidoc.createDoc">module apidoc.createDoc</a><ol>
-
-        <li>
-
-            <a class="apidocElementLiA" href="#apidoc.element.apidoc.createDoc.createDoc">
-            function <span class="apidocSignatureSpan">apidoc.</span>createDoc
-            <span class="apidocSignatureSpan">(options)</span>
-            </a>
-
-        </li>
-
-    </ol></li>
-
     <li class="apidocModuleLi"><a href="#apidoc.module.apidoc.package_info">module apidoc.package_info</a><ol>
 
         <li>
@@ -248,7 +235,18 @@
         return false;
     }
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+    silent        : argv['silent'],
+    simulate      : argv['simulate'],
+    markdown      : argv['markdown'],
+    lineEnding    : argv['line-ending'],
+    encoding      : argv['encoding'],
+};
+
+if (apidoc.<span class="apidocCodeKeywordSpan">createDoc</span>(options) === false) {
+    process.exit(1);
+}
+...</pre></li>
     </ul>
 
 
@@ -268,112 +266,6 @@
     </ul>
 
 
-
-
-</div>
-
-<div class="apidocSectionDiv">
-<h1><a href="#apidoc.module.apidoc.createDoc" id="apidoc.module.apidoc.createDoc">module apidoc.createDoc</a></h1>
-
-
-    <h2>
-        <a href="#apidoc.element.apidoc.createDoc.createDoc" id="apidoc.element.apidoc.createDoc.createDoc">
-        function <span class="apidocSignatureSpan">apidoc.</span>createDoc
-        <span class="apidocSignatureSpan">(options)</span>
-        </a>
-    </h2>
-    <ul>
-    <li>description and source-code<pre class="apidocCodePre">function createDoc(options) {
-    var api;
-    var apidocPath = path.join(__dirname, '../');
-    var markdownParser;
-    var packageInfo;
-
-    options = _.defaults({}, options, defaults);
-
-    // Paths.
-    options.dest     = path.join(options.dest, './');
-    options.template = path.join(options.template, './');
-
-    // Line-Ending.
-    if (options.lineEnding) {
-        if (options.lineEnding === 'CRLF')
-            options.lineEnding = '\r\n'; // win32
-        else if (options.lineEnding === 'CR')
-            options.lineEnding = '\r'; // darwin
-        else
-            options.lineEnding = '\n'; // linux
-    }
-
-    // Options.
-    app.options = options;
-
-    // Logger.
-    app.log = new (winston.Logger)({
-        transports: [
-            new (winston.transports.Console)({
-                level      : app.options.debug ? 'debug' : app.options.verbose ? 'verbose' : 'info',
-                silent     : app.options.silent,
-                prettyPrint: true,
-                colorize   : app.options.colorize,
-                timestamp  : false
-            }),
-        ]
-    });
-
-    // Markdown Parser: enable / disable / use a custom parser.
-    if(app.options.markdown === true) {
-        markdownParser = new Markdown({
-            breaks     : false,
-            html       : true,
-            linkify    : false,
-            typographer: false
-        });
-    } else if(app.options.markdown !== false) {
-        // Include custom Parser @see MARKDOWN.md and test/fixtures/custom_markdown_parser.js
-        Markdown = require(app.options.markdown); // Overwrite default Markdown.
-        markdownParser = new Markdown();
-    }
-    app.markdownParser = markdownParser;
-
-    try {
-        packageInfo = new PackageInfo(app);
-
-        // generator information
-        var json = JSON.parse( fs.readFileSync(apidocPath + 'package.json', 'utf8') );
-        apidoc.setGeneratorInfos({
-            name   : json.name,
-            time   : new Date(),
-            url    : json.homepage,
-            version: json.version
-        });
-        apidoc.setLogger(app.log);
-        apidoc.setMarkdownParser(markdownParser);
-        apidoc.setPackageInfos(packageInfo.get());
-
-        api = apidoc.parse(app.options);
-
-        if (api === true) {
-            app.log.info('Nothing to do.');
-            return true;
-        }
-        if (api === false)
-            return false;
-
-        if (app.options.parse !== true)
-            createOutputFiles(api);
-
-        app.log.info('Done.');
-        return api;
-    } catch(e) {
-        app.log.error(e.message);
-        if (e.stack)
-            app.log.debug(e.stack);
-        return false;
-    }
-}</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
-    </ul>
 
 
 </div>
@@ -590,7 +482,23 @@ if ( ! fs.existsSync(jsonFilename)) {
 
     return result;
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+    name   : json.name,
+    time   : new Date(),
+    url    : json.homepage,
+    version: json.version
+});
+apidoc.setLogger(app.log);
+apidoc.setMarkdownParser(markdownParser);
+apidoc.setPackageInfos(packageInfo.<span class="apidocCodeKeywordSpan">get</span>());
+
+api = apidoc.parse(app.options);
+
+if (api === true) {
+    app.log.info('Nothing to do.');
+    return true;
+}
+...</pre></li>
     </ul>
 
 
